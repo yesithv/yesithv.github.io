@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yesith Valencia — AI Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --card: #1a1a26;
+      --border: #2a2a3d;
+      --accent: #7c3aed;
+      --accent-glow: #9f67ff;
+      --accent2: #06b6d4;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --radius: 16px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ── Noise overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Grid background ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.3;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    main { position: relative; z-index: 1; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(10,10,15,0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+    }
+
+    nav .logo {
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--accent-glow);
+      letter-spacing: 0.05em;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 6rem 1.5rem 4rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(124,58,237,0.15);
+      border: 1px solid rgba(124,58,237,0.4);
+      color: var(--accent-glow);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.08em;
+    }
+
+    .badge::before {
+      content: '';
+      width: 8px; height: 8px;
+      background: var(--accent-glow);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-glow);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      background: linear-gradient(135deg, #fff 0%, var(--accent-glow) 50%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero .title {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(0.85rem, 2vw, 1.05rem);
+      color: var(--muted);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero p {
+      max-width: 520px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.7rem 1.5rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 20px rgba(124,58,237,0.4);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-glow);
+      box-shadow: 0 0 30px rgba(159,103,255,0.6);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent-glow);
+      color: var(--accent-glow);
+      transform: translateY(-2px);
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 5rem 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent-glow);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 3rem;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .skill-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .skill-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .skill-card .icon { font-size: 1.6rem; margin-bottom: 0.5rem; }
+    .skill-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .skill-card p { font-size: 0.8rem; color: var(--muted); }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .project-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .project-card:hover::before { opacity: 1; }
+
+    .project-emoji { font-size: 2.5rem; }
+
+    .project-card h3 { font-size: 1.15rem; font-weight: 700; }
+
+    .project-card p { color: var(--muted); font-size: 0.9rem; flex: 1; }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      background: rgba(124,58,237,0.15);
+      color: var(--accent-glow);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(124,58,237,0.3);
+      font-family: 'Space Mono', monospace;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .link-demo {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .link-demo:hover {
+      background: var(--accent-glow);
+      transform: translateY(-1px);
+    }
+
+    .link-github {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .link-github:hover {
+      color: var(--text);
+      border-color: var(--muted);
+      transform: translateY(-1px);
+    }
+
+    /* ── CONTACT ── */
+    .contact-wrapper {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-wrapper::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; right: -60px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(124,58,237,0.2), transparent 70%);
+      pointer-events: none;
+    }
+
+    .contact-wrapper h2 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .contact-wrapper p { color: var(--muted); margin-bottom: 2rem; }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+      border-top: 1px solid var(--border);
+    }
+
+    footer span { color: var(--accent-glow); }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 999px;
+      margin-bottom: 3rem;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      nav ul { gap: 1rem; }
+      .contact-wrapper { padding: 2rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span class="logo">YV.dev</span>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero" id="about">
+      <div class="badge">Available for opportunities</div>
+      <h1>Yesith Valencia</h1>
+      <p class="title">AI Engineer &amp; Software Developer</p>
+      <p>Building intelligent systems at the intersection of software engineering and artificial intelligence. Transforming ideas into production-ready AI solutions.</p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#contact" class="btn btn-outline">Get in Touch</a>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <p class="section-label">Expertise</p>
+      <h2 class="section-title">Skills &amp; Technologies</h2>
+      <p class="section-desc">From classical software engineering to cutting-edge AI, I bridge both worlds.</p>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="icon">🤖</div>
+          <h3>Machine Learning</h3>
+          <p>PyTorch, TensorFlow, scikit-learn, model training &amp; deployment</p>
+        </div>
+        <div class="skill-card">
+          <div class="icon">🧠</div>
+          <h3>LLMs &amp; GenAI</h3>
+          <p>LangChain, RAG pipelines, prompt engineering, OpenAI APIs</p>
+        </div>
+        <div class="skill-card">
+          <div class="icon">👁️</div>
+          <h3>Computer Vision</h3>
+          <p>Image classification, object detection, OpenCV, Hugging Face</p>
+        </div>
+        <div class="skill-card">
+          <div class="icon">⚙️</div>
+          <h3>Backend &amp; APIs</h3>
+          <p>Python, FastAPI, Node.js, REST APIs, Docker</p>
+        </div>
+        <div class="skill-card">
+          <div class="icon">☁️</div>
+          <h3>Cloud &amp; MLOps</h3>
+          <p>AWS, GCP, model versioning, CI/CD pipelines</p>
+        </div>
+        <div class="skill-card">
+          <div class="icon">📊</div>
+          <h3>Data Engineering</h3>
+          <p>Pandas, SQL, data pipelines, feature engineering</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <p class="section-label">Work</p>
+      <h2 class="section-title">Featured Projects</h2>
+      <p class="section-desc">A selection of AI-powered applications built end-to-end, from research to deployment.</p>
+      <div class="projects-grid">
+
+        <!-- Project 1 -->
+        <div class="project-card">
+          <div class="project-emoji">🧠</div>
+          <h3>Emotion Detector</h3>
+          <p>Real-time facial emotion recognition using a fine-tuned CNN model. Detects 7 emotional states from webcam feed or uploaded images with high accuracy.</p>
+          <div class="tags">
+            <span class="tag">PyTorch</span>
+            <span class="tag">OpenCV</span>
+            <span class="tag">Computer Vision</span>
+          </div>
+          <div class="project-links">
+            <a href="#" class="link-btn link-demo">▶ Live Demo</a>
+            <a href="#" class="link-btn link-github">⌥ GitHub</a>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card">
+          <div class="project-emoji">🖼️</div>
+          <h3>Image Caption Generator</h3>
+          <p>Multimodal AI model that generates natural language descriptions for any image. Built with a Vision Transformer encoder and GPT-2 decoder architecture.</p>
+          <div class="tags">
+            <span class="tag">Hugging Face</span>
+            <span class="tag">Transformers</span>
+            <span class="tag">NLP</span>
+          </div>
+          <div class="project-links">
+            <a href="#" class="link-btn link-demo">▶ Live Demo</a>
+            <a href="#" class="link-btn link-github">⌥ GitHub</a>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="project-card">
+          <div class="project-emoji">📄</div>
+          <h3>PDF Chatbot</h3>
+          <p>Conversational AI assistant that ingests PDF documents and answers questions using RAG (Retrieval-Augmented Generation). Powered by LangChain and vector embeddings.</p>
+          <div class="tags">
+            <span class="tag">LangChain</span>
+            <span class="tag">RAG</span>
+            <span class="tag">OpenAI</span>
+          </div>
+          <div class="project-links">
+            <a href="#" class="link-btn link-demo">▶ Live Demo</a>
+            <a href="#" class="link-btn link-github">⌥ GitHub</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="contact-wrapper">
+        <p class="section-label">Contact</p>
+        <h2>Let's Build Something Together</h2>
+        <p>Open to freelance projects, full-time roles, and AI consulting. Drop me a message.</p>
+        <div class="contact-links">
+          <a href="mailto:yesithvalencia@gmail.com" class="btn btn-primary">📧 yesithvalencia@gmail.com</a>
+          <a href="tel:+573183973083" class="btn btn-outline">📞 +57 318 397 3083</a>
+          <a href="https://github.com/yesithv" target="_blank" rel="noopener" class="btn btn-outline">GitHub</a>
+          <a href="https://www.linkedin.com/in/yesithv/" target="_blank" rel="noopener" class="btn btn-outline">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Designed &amp; built by <span>Yesith Valencia</span> · 2026</p>
+  </footer>
+
+</body>
+</html>
