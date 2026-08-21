@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yesith Valencia — AI Engineer</title>
+  <title>Yesith Valencia — Technical Lead &amp; Senior Software Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
@@ -250,7 +250,7 @@
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1.25rem 1.5rem;
+      padding: 2rem 2.5rem;
       transition: border-color 0.2s, transform 0.2s;
     }
 
@@ -259,15 +259,120 @@
       transform: translateY(-3px);
     }
 
-    .skill-card .icon { font-size: 1.6rem; margin-bottom: 0.5rem; }
-    .skill-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.25rem; }
-    .skill-card p { font-size: 0.8rem; color: var(--muted); }
+    .skill-card .icon { font-size: 2.2rem; margin-bottom: 0.75rem; }
+    .skill-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.35rem; }
+    .skill-card p { font-size: 0.875rem; color: var(--muted); }
 
-    /* ── PROJECTS ── */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    /* ── PROJECTS CAROUSEL ── */
+    .carousel-outer {
+      position: relative;
+    }
+
+    .carousel-track-wrapper {
+      overflow: hidden;
+    }
+
+    .carousel-track {
+      display: flex;
       gap: 1.5rem;
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .carousel-track.dragging {
+      transition: none;
+      cursor: grabbing;
+    }
+
+    .carousel-track .project-card {
+      flex: 0 0 calc((100% - 3rem) / 3);
+    }
+
+    .carousel-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .carousel-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .carousel-btn:hover:not(:disabled) {
+      border-color: var(--accent-glow);
+      color: var(--accent-glow);
+      transform: scale(1.1);
+    }
+
+    .carousel-btn:disabled {
+      opacity: 0.25;
+      cursor: not-allowed;
+    }
+
+    .carousel-dots {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .carousel-dot.active {
+      background: var(--accent-glow);
+      transform: scale(1.4);
+    }
+
+    @media (max-width: 900px) {
+      .carousel-track .project-card {
+        flex: 0 0 calc((100% - 1.5rem) / 2);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .carousel-track .project-card {
+        flex: 0 0 100%;
+      }
+    }
+
+    .carousel-track .skill-card {
+      flex: 0 0 calc((100% - 4.5rem) / 4);
+    }
+
+    @media (max-width: 900px) {
+      .carousel-track .skill-card {
+        flex: 0 0 calc((100% - 1.5rem) / 2);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .carousel-track .skill-card {
+        flex: 0 0 100%;
+      }
     }
 
     .project-card {
@@ -363,6 +468,114 @@
       transform: translateY(-1px);
     }
 
+    /* ── EXPERIENCE ── */
+    .experience-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .exp-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem 2rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.2rem 1rem;
+      transition: border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .exp-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, var(--accent), var(--accent2));
+    }
+
+    .exp-card:hover { border-color: var(--accent); }
+
+    .exp-role {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .exp-company {
+      font-size: 0.875rem;
+      color: var(--accent-glow);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .exp-company:hover { text-decoration: underline; }
+
+    .exp-period {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-align: right;
+      white-space: nowrap;
+      grid-row: span 2;
+      align-self: start;
+      padding-top: 0.15rem;
+    }
+
+    .exp-card ul {
+      grid-column: 1 / -1;
+      margin-top: 0.75rem;
+      padding-left: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .exp-card li {
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      .exp-card { grid-template-columns: 1fr; }
+      .exp-period { text-align: left; grid-row: auto; }
+    }
+
+    .carousel-track .exp-card {
+      flex: 0 0 calc((100% - 1.5rem) / 2);
+    }
+
+    @media (max-width: 900px) {
+      .carousel-track .exp-card {
+        flex: 0 0 100%;
+      }
+    }
+
+    /* ── EDUCATION ── */
+    .edu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .edu-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .edu-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .edu-degree { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .edu-school { font-size: 0.82rem; color: var(--accent-glow); font-weight: 600; margin-bottom: 0.15rem; }
+    .edu-location { font-size: 0.78rem; color: var(--muted); }
+
     /* ── CONTACT ── */
     .contact-wrapper {
       background: var(--card);
@@ -424,9 +637,11 @@
 
   <!-- NAV -->
   <nav>
-    <span class="logo">YV.dev</span>
+    <span class="logo">YesithV</span>
     <ul>
       <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#education">Education</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -436,12 +651,13 @@
 
     <!-- HERO -->
     <section class="hero" id="about">
-      <div class="badge">Available for opportunities</div>
+      <div class="badge">10+ Years Engineering · Expanding into AI</div>
       <h1>Yesith Valencia</h1>
-      <p class="title">AI Engineer &amp; Software Developer</p>
-      <p>Building intelligent systems at the intersection of software engineering and artificial intelligence. Transforming ideas into production-ready AI solutions.</p>
+      <p class="title">Java developer &amp; Senior Software Engineer</p>
+      <p>Java developer Lead with 10+ years designing, modernizing and delivering enterprise applications across global companies. Now channeling that engineering foundation into AI — building intelligent, production-ready solutions.</p>
       <div class="hero-actions">
-        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#experience" class="btn btn-primary">View Experience</a>
+        <a href="#projects" class="btn btn-outline">AI Projects</a>
         <a href="#contact" class="btn btn-outline">Get in Touch</a>
       </div>
     </section>
@@ -451,37 +667,158 @@
       <p class="section-label">Expertise</p>
       <h2 class="section-title">Skills &amp; Technologies</h2>
       <p class="section-desc">From classical software engineering to cutting-edge AI, I bridge both worlds.</p>
-      <div class="skills-grid">
-        <div class="skill-card">
-          <div class="icon">🤖</div>
-          <h3>Machine Learning</h3>
-          <p>PyTorch, TensorFlow, scikit-learn, model training &amp; deployment</p>
+      <div class="carousel-outer">
+        <div class="carousel-track-wrapper">
+          <div class="carousel-track" id="skillsTrack">
+            <div class="skill-card">
+              <div class="icon">☕</div>
+              <h3>Java Ecosystem</h3>
+              <p>Java 8–21, Spring Boot, Spring MVC, Java EE, REST APIs, Microservices</p>
+            </div>
+            <div class="skill-card">
+              <div class="icon">🏗️</div>
+              <h3>Architecture &amp; Design</h3>
+              <p>Microservices, Distributed Systems, Monolith migrations, Client-Server patterns</p>
+            </div>
+            <div class="skill-card">
+              <div class="icon">☁️</div>
+              <h3>Cloud &amp; DevOps</h3>
+              <p>Azure, AWS, Docker, Podman, CI/CD, Digital Ocean, GCP messaging</p>
+            </div>
+            <div class="skill-card">
+              <div class="icon">🗄️</div>
+              <h3>Data &amp; Quality</h3>
+              <p>PostgreSQL, MySQL, JUnit, Mockito, JMeter, performance &amp; integration testing</p>
+            </div>
+            <div class="skill-card">
+              <div class="icon">🤖</div>
+              <h3>AI &amp; Machine Learning</h3>
+              <p>PyTorch, Hugging Face Transformers, LangChain, RAG, Gradio <em>(expanding)</em></p>
+            </div>
+            <div class="skill-card">
+              <div class="icon">👥</div>
+              <h3>Leadership</h3>
+              <p>Technical Lead, Agile delivery, team mentoring, stakeholder management, solution design</p>
+            </div>
+          </div>
         </div>
-        <div class="skill-card">
-          <div class="icon">🧠</div>
-          <h3>LLMs &amp; GenAI</h3>
-          <p>LangChain, RAG pipelines, prompt engineering, OpenAI APIs</p>
+        <div class="carousel-controls">
+          <button class="carousel-btn" id="skillsPrev" aria-label="Previous">&larr;</button>
+          <div class="carousel-dots" id="skillsDots"></div>
+          <button class="carousel-btn" id="skillsNext" aria-label="Next">&rarr;</button>
         </div>
-        <div class="skill-card">
-          <div class="icon">👁️</div>
-          <h3>Computer Vision</h3>
-          <p>Image classification, object detection, OpenCV, Hugging Face</p>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+      <p class="section-label">Career</p>
+      <h2 class="section-title">Work Experience</h2>
+      <p class="section-desc">10+ years delivering scalable enterprise solutions across global and regional tech companies.</p>
+      <div class="carousel-outer">
+        <div class="carousel-track-wrapper">
+          <div class="carousel-track" id="expTrack">
+
+            <div class="exp-card">
+              <div>
+                <div class="exp-role">Specialized Software Developer</div>
+                <a href="https://www.amadeus.com/" target="_blank" rel="noopener" class="exp-company">Amadeus</a>
+              </div>
+              <div class="exp-period">Feb 2025 – Present</div>
+              <ul>
+                <li>Develop and maintain mission-critical applications for global travel industry customers in highly available enterprise environments.</li>
+                <li>Investigate and resolve complex production issues collaborating with Product Definition Analysts, QA engineers and development teams.</li>
+                <li>Participate in code reviews, Bitbucket workflows and containerized development using Podman within Azure-based platforms.</li>
+              </ul>
+            </div>
+
+            <div class="exp-card">
+              <div>
+                <div class="exp-role">Senior Java Developer</div>
+                <a href="https://www.allstarsit.com/" target="_blank" rel="noopener" class="exp-company">AllStarsIT</a>
+              </div>
+              <div class="exp-period">May 2024 – Feb 2025</div>
+              <ul>
+                <li>Developed and maintained Spring Boot microservices and enterprise Java applications including REST integrations and Vue.js components.</li>
+                <li>Designed automated testing solutions using JUnit and Mockito, improving software quality and maintainability.</li>
+                <li>Supported cloud-based integrations using AWS and GCP messaging, contributing to distributed systems architecture.</li>
+              </ul>
+            </div>
+
+            <div class="exp-card">
+              <div>
+                <div class="exp-role">Senior Java Developer · Team Leader Trainee</div>
+                <a href="https://www.globant.com/" target="_blank" rel="noopener" class="exp-company">Globant</a>
+              </div>
+              <div class="exp-period">Sep 2021 – Apr 2024</div>
+              <ul>
+                <li>Led modernization initiatives migrating monolithic applications to Spring Boot microservices while coordinating multidisciplinary teams.</li>
+                <li>Designed serverless integration solutions, PostgreSQL data services and performance testing strategies using JMeter.</li>
+                <li>Participated in architecture discussions, technical estimations and cloud-based delivery using Azure and Docker.</li>
+              </ul>
+            </div>
+
+            <div class="exp-card">
+              <div>
+                <div class="exp-role">Full Stack Developer · Team Lead</div>
+                <a href="https://neivor.com/" target="_blank" rel="noopener" class="exp-company">Neivor</a>
+              </div>
+              <div class="exp-period">Jun 2020 – Sep 2021</div>
+              <ul>
+                <li>Served as technical lead for a SaaS platform, driving architecture decisions, mentoring developers and promoting engineering best practices.</li>
+                <li>Collaborated with stakeholders to define solutions for customer management, billing, subscription workflows and commercial operations.</li>
+                <li>Designed REST API integrations with banking platforms and supported cloud deployments on Digital Ocean.</li>
+              </ul>
+            </div>
+
+            <div class="exp-card">
+              <div>
+                <div class="exp-role">Project Director</div>
+                <a href="http://web.udi.edu.co/" target="_blank" rel="noopener" class="exp-company">Research University of Development (UDI)</a>
+              </div>
+              <div class="exp-period">Aug 2019 – Jun 2020</div>
+              <ul>
+                <li>Led software engineering projects with undergraduate students, providing technical guidance and project management support.</li>
+                <li>Taught Agile methodologies, software engineering practices and modern development processes.</li>
+                <li>Contributed to curriculum design and academic quality certification initiatives.</li>
+              </ul>
+            </div>
+
+          </div>
         </div>
-        <div class="skill-card">
-          <div class="icon">⚙️</div>
-          <h3>Backend &amp; APIs</h3>
-          <p>Python, FastAPI, Node.js, REST APIs, Docker</p>
+        <div class="carousel-controls">
+          <button class="carousel-btn" id="expPrev" aria-label="Previous">&larr;</button>
+          <div class="carousel-dots" id="expDots"></div>
+          <button class="carousel-btn" id="expNext" aria-label="Next">&rarr;</button>
         </div>
-        <div class="skill-card">
-          <div class="icon">☁️</div>
-          <h3>Cloud &amp; MLOps</h3>
-          <p>AWS, GCP, model versioning, CI/CD pipelines</p>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education">
+      <p class="section-label">Academic Background</p>
+      <h2 class="section-title">Education</h2>
+      <p class="section-desc">Formal foundation in systems engineering with graduate studies in management and research.</p>
+      <div class="edu-grid">
+
+        <div class="edu-card">
+          <div class="edu-degree">MsC in Systems Engineering</div>
+          <div class="edu-school">Industrial University of Santander</div>
+          <div class="edu-location">Bucaramanga, Colombia</div>
         </div>
-        <div class="skill-card">
-          <div class="icon">📊</div>
-          <h3>Data Engineering</h3>
-          <p>Pandas, SQL, data pipelines, feature engineering</p>
+
+        <div class="edu-card">
+          <div class="edu-degree">Specialist in Project Management</div>
+          <div class="edu-school">University of Pamplona</div>
+          <div class="edu-location">Pamplona, Colombia</div>
         </div>
+
+        <div class="edu-card">
+          <div class="edu-degree">BS in Systems Engineering</div>
+          <div class="edu-school">Industrial University of Santander</div>
+          <div class="edu-location">Bucaramanga, Colombia</div>
+        </div>
+
       </div>
     </section>
 
@@ -490,56 +827,96 @@
       <p class="section-label">Work</p>
       <h2 class="section-title">Featured Projects</h2>
       <p class="section-desc">A selection of AI-powered applications built end-to-end, from research to deployment.</p>
-      <div class="projects-grid">
 
-        <!-- Project 1 -->
-        <div class="project-card">
-          <div class="project-emoji">🧠</div>
-          <h3>Emotion Detector</h3>
-          <p>Real-time facial emotion recognition using a fine-tuned CNN model. Detects 7 emotional states from webcam feed or uploaded images with high accuracy.</p>
-          <div class="tags">
-            <span class="tag">PyTorch</span>
-            <span class="tag">OpenCV</span>
-            <span class="tag">Computer Vision</span>
-          </div>
-          <div class="project-links">
-            <a href="#" class="link-btn link-demo">▶ Live Demo</a>
-            <a href="#" class="link-btn link-github">⌥ GitHub</a>
+      <div class="carousel-outer">
+        <div class="carousel-track-wrapper">
+          <div class="carousel-track" id="projectsTrack">
+
+            <!-- Project 1 -->
+            <div class="project-card">
+              <div class="project-emoji">🧠</div>
+              <h3>Emotion Detector</h3>
+              <p>Real-time facial emotion recognition using a fine-tuned CNN model. Detects 7 emotional states from webcam feed or uploaded images with high accuracy.</p>
+              <div class="tags">
+                <span class="tag">PyTorch</span>
+                <span class="tag">OpenCV</span>
+                <span class="tag">Computer Vision</span>
+              </div>
+              <div class="project-links">
+                <a href="#" class="link-btn link-github">⌥ GitHub</a>
+              </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card">
+              <div class="project-emoji">🖼️</div>
+              <h3>Image Caption Generator</h3>
+              <p>AI-powered web application that analyzes uploaded images and generates natural language descriptions using Salesforce BLIP. Interactive Gradio interface with six built-in example images and a clean layered architecture (model, service, UI).</p>
+              <div class="tags">
+                <span class="tag">Python</span>
+                <span class="tag">BLIP</span>
+                <span class="tag">Hugging Face</span>
+                <span class="tag">Gradio</span>
+                <span class="tag">PyTorch</span>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com/yesithv/image-caption-generator" target="_blank" rel="noopener" class="link-btn link-github">⌥ GitHub</a>
+              </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card">
+              <div class="project-emoji">📄</div>
+              <h3>PDF Chatbot</h3>
+              <p>Conversational AI assistant that ingests PDF documents and answers questions using RAG (Retrieval-Augmented Generation). Powered by LangChain and vector embeddings.</p>
+              <div class="tags">
+                <span class="tag">LangChain</span>
+                <span class="tag">RAG</span>
+                <span class="tag">OpenAI</span>
+              </div>
+              <div class="project-links">
+                <a href="#" class="link-btn link-github">⌥ GitHub</a>
+              </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="project-card">
+              <div class="project-emoji">🔊</div>
+              <h3>Voice Assistant</h3>
+              <p>Coming soon — a speech-driven AI assistant that transcribes voice input, processes it through an LLM, and responds with synthesized audio. End-to-end voice pipeline.</p>
+              <div class="tags">
+                <span class="tag">Whisper</span>
+                <span class="tag">LLM</span>
+                <span class="tag">TTS</span>
+              </div>
+              <div class="project-links">
+                <a href="#" class="link-btn link-github">⌥ GitHub</a>
+              </div>
+            </div>
+
+            <!-- Project 5 -->
+            <div class="project-card">
+              <div class="project-emoji">📈</div>
+              <h3>Stock Forecast</h3>
+              <p>Coming soon — time-series forecasting model combining LSTM networks and sentiment analysis from financial news to predict short-term stock price movements.</p>
+              <div class="tags">
+                <span class="tag">LSTM</span>
+                <span class="tag">NLP</span>
+                <span class="tag">Finance</span>
+              </div>
+              <div class="project-links">
+                <a href="#" class="link-btn link-github">⌥ GitHub</a>
+              </div>
+            </div>
+
           </div>
         </div>
 
-        <!-- Project 2 -->
-        <div class="project-card">
-          <div class="project-emoji">🖼️</div>
-          <h3>Image Caption Generator</h3>
-          <p>Multimodal AI model that generates natural language descriptions for any image. Built with a Vision Transformer encoder and GPT-2 decoder architecture.</p>
-          <div class="tags">
-            <span class="tag">Hugging Face</span>
-            <span class="tag">Transformers</span>
-            <span class="tag">NLP</span>
-          </div>
-          <div class="project-links">
-            <a href="#" class="link-btn link-demo">▶ Live Demo</a>
-            <a href="#" class="link-btn link-github">⌥ GitHub</a>
-          </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" id="prevBtn" aria-label="Previous">&#8592;</button>
+          <div class="carousel-dots" id="carouselDots"></div>
+          <button class="carousel-btn" id="nextBtn" aria-label="Next">&#8594;</button>
         </div>
-
-        <!-- Project 3 -->
-        <div class="project-card">
-          <div class="project-emoji">📄</div>
-          <h3>PDF Chatbot</h3>
-          <p>Conversational AI assistant that ingests PDF documents and answers questions using RAG (Retrieval-Augmented Generation). Powered by LangChain and vector embeddings.</p>
-          <div class="tags">
-            <span class="tag">LangChain</span>
-            <span class="tag">RAG</span>
-            <span class="tag">OpenAI</span>
-          </div>
-          <div class="project-links">
-            <a href="#" class="link-btn link-demo">▶ Live Demo</a>
-            <a href="#" class="link-btn link-github">⌥ GitHub</a>
-          </div>
-        </div>
-
       </div>
     </section>
 
@@ -564,5 +941,90 @@
     <p>Designed &amp; built by <span>Yesith Valencia</span> · 2026</p>
   </footer>
 
+  <script>
+    (function () {
+      function makeCarousel(trackId, prevId, nextId, dotsId, itemSel, label) {
+        const track = document.getElementById(trackId);
+        const cards = track.querySelectorAll(itemSel);
+        const prevBtn = document.getElementById(prevId);
+        const nextBtn = document.getElementById(nextId);
+        const dotsContainer = document.getElementById(dotsId);
+        let current = 0;
+
+        cards.forEach((_, i) => {
+          const dot = document.createElement('button');
+          dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+          dot.setAttribute('aria-label', label + ' ' + (i + 1));
+          dot.addEventListener('click', () => goTo(i));
+          dotsContainer.appendChild(dot);
+        });
+
+        const dots = dotsContainer.querySelectorAll('.carousel-dot');
+
+        function visibleCount() {
+          const w = window.innerWidth;
+          if (w >= 900) return 3;
+          if (w >= 600) return 2;
+          return 1;
+        }
+
+        function goTo(index) {
+          const max = cards.length - visibleCount();
+          current = Math.max(0, Math.min(index, max));
+          const gap = parseFloat(getComputedStyle(track).gap) || 24;
+          track.style.transform = 'translateX(-' + (current * (cards[0].offsetWidth + gap)) + 'px)';
+          dots.forEach((d, i) => d.classList.toggle('active', i === current));
+          prevBtn.disabled = current === 0;
+          nextBtn.disabled = current >= max;
+        }
+
+        prevBtn.addEventListener('click', () => goTo(current - 1));
+        nextBtn.addEventListener('click', () => goTo(current + 1));
+        window.addEventListener('resize', () => goTo(Math.min(current, cards.length - visibleCount())));
+
+        let dragStart = 0, dragDelta = 0, isDragging = false;
+
+        function dragOffset() {
+          const gap = parseFloat(getComputedStyle(track).gap) || 24;
+          return current * (cards[0].offsetWidth + gap);
+        }
+
+        function onDragStart(x) {
+          dragStart = x; dragDelta = 0; isDragging = true;
+          track.classList.add('dragging');
+        }
+
+        function onDragMove(x) {
+          if (!isDragging) return;
+          dragDelta = x - dragStart;
+          track.style.transform = 'translateX(' + (-dragOffset() + dragDelta) + 'px)';
+        }
+
+        function onDragEnd() {
+          if (!isDragging) return;
+          isDragging = false;
+          track.classList.remove('dragging');
+          const threshold = cards[0].offsetWidth * 0.25;
+          if (dragDelta < -threshold) goTo(current + 1);
+          else if (dragDelta > threshold) goTo(current - 1);
+          else goTo(current);
+        }
+
+        track.addEventListener('mousedown', e => { e.preventDefault(); onDragStart(e.clientX); });
+        window.addEventListener('mousemove', e => onDragMove(e.clientX));
+        window.addEventListener('mouseup', onDragEnd);
+        track.addEventListener('touchstart', e => onDragStart(e.touches[0].clientX), { passive: true });
+        track.addEventListener('touchmove', e => onDragMove(e.touches[0].clientX), { passive: true });
+        track.addEventListener('touchend', onDragEnd);
+        track.addEventListener('click', e => { if (Math.abs(dragDelta) > 5) e.preventDefault(); }, true);
+
+        goTo(0);
+      }
+
+      makeCarousel('skillsTrack',   'skillsPrev', 'skillsNext', 'skillsDots',   '.skill-card',   'Skill');
+      makeCarousel('expTrack',       'expPrev',    'expNext',    'expDots',      '.exp-card',     'Job');
+      makeCarousel('projectsTrack', 'prevBtn',    'nextBtn',    'carouselDots', '.project-card', 'Project');
+    })();
+  </script>
 </body>
 </html>
