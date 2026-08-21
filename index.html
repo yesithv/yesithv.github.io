@@ -409,6 +409,53 @@
 
     .project-emoji { font-size: 2.5rem; }
 
+    .project-preview-gif {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      object-fit: cover;
+      cursor: zoom-in;
+      transition: opacity 0.2s;
+    }
+
+    .project-preview-gif:hover { opacity: 0.85; }
+
+    #gif-lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(6px);
+    }
+
+    #gif-lightbox.open { display: flex; }
+
+    #gif-lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 10px;
+      box-shadow: 0 0 60px rgba(0,0,0,0.8);
+    }
+
+    #gif-lightbox-close {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      line-height: 1;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+
+    #gif-lightbox-close:hover { opacity: 1; }
+
     .project-card h3 { font-size: 1.15rem; font-weight: 700; }
 
     .project-card p { color: var(--muted); font-size: 0.9rem; flex: 1; }
@@ -852,6 +899,7 @@
             <div class="project-card">
               <div class="project-emoji">🖼️</div>
               <h3>Image Caption Generator</h3>
+              <img src="https://raw.githubusercontent.com/yesithv/image-caption-generator/main/assets/demo.gif" alt="Image Caption Generator demo" class="project-preview-gif" onclick="openGifLightbox(this)" />
               <p>AI-powered web application that analyzes uploaded images and generates natural language descriptions using Salesforce BLIP. Interactive Gradio interface with six built-in example images and a clean layered architecture (model, service, UI).</p>
               <div class="tags">
                 <span class="tag">Python</span>
@@ -1026,6 +1074,30 @@
       makeCarousel('expTrack',       'expPrev',    'expNext',    'expDots',      '.exp-card',     'Job');
       makeCarousel('projectsTrack', 'prevBtn',    'nextBtn',    'carouselDots', '.project-card', 'Project');
     })();
+
+    function openGifLightbox(img) {
+      const lb = document.getElementById('gif-lightbox');
+      document.getElementById('gif-lightbox-img').src = img.src;
+      lb.classList.add('open');
+    }
+
+    function closeGifLightbox() {
+      document.getElementById('gif-lightbox').classList.remove('open');
+    }
+
+    document.getElementById('gif-lightbox').addEventListener('click', function(e) {
+      if (e.target === this) closeGifLightbox();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeGifLightbox();
+    });
   </script>
+
+  <!-- Lightbox overlay -->
+  <div id="gif-lightbox" role="dialog" aria-modal="true" aria-label="Demo preview">
+    <button id="gif-lightbox-close" onclick="closeGifLightbox()" aria-label="Cerrar">&times;</button>
+    <img id="gif-lightbox-img" src="" alt="Demo preview" />
+  </div>
 </body>
 </html>
