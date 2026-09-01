@@ -1,5 +1,6 @@
 (function () {
-  function makeCarousel(trackId, prevId, nextId, dotsId, itemSel, label) {
+  function makeCarousel(trackId, prevId, nextId, dotsId, itemSel, label, desktopCount) {
+    desktopCount = desktopCount || 3;
     const track = document.getElementById(trackId);
     const cards = track.querySelectorAll(itemSel);
     const prevBtn = document.getElementById(prevId);
@@ -19,7 +20,7 @@
 
     function visibleCount() {
       const w = window.innerWidth;
-      if (w >= 900) return 3;
+      if (w >= 900) return desktopCount;
       if (w >= 600) return 2;
       return 1;
     }
@@ -79,7 +80,7 @@
 
   makeCarousel('skillsTrack',   'skillsPrev', 'skillsNext', 'skillsDots',   '.skill-card',   'Skill');
   makeCarousel('expTrack',       'expPrev',    'expNext',    'expDots',      '.exp-card',     'Job');
-  makeCarousel('projectsTrack', 'prevBtn',    'nextBtn',    'carouselDots', '.project-card', 'Project');
+  makeCarousel('projectsTrack', 'prevBtn',    'nextBtn',    'carouselDots', '.project-card', 'Project', 4);
 })();
 
 // ── Hamburger nav ──
